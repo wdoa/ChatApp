@@ -9,7 +9,7 @@ public class Connection {
 	private OutputStream os;
 	public Socket socket;
 	private Message m = null;
-	// private String nick;
+	private String nick;
 
 	public void disconnect() throws IOException {
 		socket.close();
