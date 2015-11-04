@@ -2,7 +2,6 @@
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.net.InetAddress;
 import java.net.Socket;
 
 public class Connection {
@@ -22,7 +21,7 @@ public class Connection {
 
 	public Connection(String IP, String Nick) {
 		try {
-			socket = new Socket(InetAddress.getByName(IP), port);
+			socket = new Socket(IP, port);
 			os = socket.getOutputStream();
 			DataOutputStream ds = new DataOutputStream(os);
 			//m.setTo(IP);
