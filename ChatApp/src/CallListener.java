@@ -6,17 +6,18 @@ public class CallListener {
 	public String userName;
 	public Boolean statusBusy;
 	private final int localPort = 28411;
+	private final String IP = "127.0.0.1";
 	public SocketAddress remoteAddress;
 	public SocketAddress localAddress;
     
 	public CallListener(String userName) {
 		this.userName = userName;
-		this.remoteAddress = new InetSocketAddress("127.0.0.0", localPort);
+		this.remoteAddress = new InetSocketAddress(IP, localPort);
 	}
     
 	public CallListener() {
 		userName ="name";
-	    remoteAddress = new InetSocketAddress("127.0.0.0", localPort);
+	    remoteAddress = new InetSocketAddress(IP, localPort);
 	}
 	Connection getConnection() throws IOException {
 		if (isStatusBusy()) {
