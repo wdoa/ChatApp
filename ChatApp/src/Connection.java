@@ -1,4 +1,5 @@
 
+import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -12,9 +13,10 @@ public class Connection {
 	//private Message m = null;
 	private String nick;
 	private DataOutputStream ds;
+	private DataInputStream in;
 
 	public void disconnect() throws IOException {
-		out.writeUTF("DISCONNECT");
+		out.write("DISCONNECT\n".getBytes());
 		out.flush();
 		out.close;
 		socket.close();
@@ -24,7 +26,8 @@ public class Connection {
 		try {
 			socket = new Socket(InetAddress.getByName(IP), port);
 			os = socket.getOutputStream();
-			DataOutputStream ds = new DataOutputStream(os);
+			ds = new DataOutputStream(os);
+			in = new DataInputStream(socket.getInputStream());
 			//m.setTo(IP);
 			//m.setFrom(socket.getInetAddress().getHostName());
 			nick = Nick;
@@ -35,29 +38,42 @@ public class Connection {
 	}
 
 	public void accept() throws IOException {
-		out.writeUTF("ACCEPT");
+		out.write("ACCEPT\n".getBytes());
 		ds.flush();
 	}
 
 	public void reject() throws IOException {
-		ds.writeUTF("REJECTED");
+		ds.write("REJECTED\n".getBytes());
 		ds.flush();
 	}
 
 	public void sendNickHello(String nick1) throws IOException {
-		out.writeUTF("ChatApp 2015 " + nick);
+		out.write(("ChatApp 2015 " + nick+ "\n").getBytes());
 		out.flush();
 	}
 
 	public void sendNickBusy(String nick1) throws IOException {
-		out.writeUTF("ChatApp 2015 " + nick + " busy");
+		out.write(("ChatApp 2015 " + nick + " busy" + "\n").getBytes());
 		out.flush();
 	}
 
 	public void sendMessage(String text) {
-		out.writeUTF("MESSAGE");
-		out.writeUTF(text);
+		out.write("MESSAGE\n".getBytes());
+		out.write(text.getBytes());
 		out.flush();
+	}
+
+	public Command receive() throws IOException {
+		String command = "";
+		int n;
+		while (true) {
+			if((n = in.read()) == '\n') {
+					break;
+			} else
+				command += (char) n;
+		}
+		Command comand = new Command(command);
+		return comand;
 	}
 
 }
