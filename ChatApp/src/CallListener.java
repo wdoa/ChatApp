@@ -1,5 +1,4 @@
 import java.net.InetSocketAddress;
-
 import java.net.SocketAddress;
 import java.io.*;
 
@@ -23,8 +22,7 @@ public class CallListener {
 		if (isStatusBusy()) {
 			return null;
 		} else {
-			
-			Connection connect = new Connection("localPort", userName);
+		    Connection connect = new Connection("localPort", userName);
 			return connect;
 		}
 
