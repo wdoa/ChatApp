@@ -25,7 +25,7 @@ public class CallListener {
 			return null;
 		} else {
 			ServerSocket ss = new ServerSocket(localPort);
-		    Connection connect = new Connection(ss, userName);
+		    Connection connect = new Connection(ss.accept(), userName);
 			return connect;
 		}
 
