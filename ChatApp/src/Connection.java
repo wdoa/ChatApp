@@ -16,9 +16,9 @@ public class Connection {
 	private DataInputStream in;
 
 	public void disconnect() throws IOException {
-		out.write("DISCONNECT\n".getBytes());
-		out.flush();
-		out.close;
+		ds.write("DISCONNECT\n".getBytes());
+		ds.flush();
+		ds.close();
 		socket.close();
 	}
 
@@ -44,14 +44,14 @@ public class Connection {
 			ds = new DataOutputStream(os);
 			in = new DataInputStream(socket.getInputStream());
 			nick = Nick;
-			System.out.println(IP + " is connected. Type message.");
+			System.out.println(s.getInetAddress() + " is connected. Type message.");
 		} catch (IOException ex) {
 			System.out.println(ex);
 		}
 	}
 
 	public void accept() throws IOException {
-		out.write("ACCEPT\n".getBytes());
+		ds.write("ACCEPT\n".getBytes());
 		ds.flush();
 	}
 
@@ -61,19 +61,19 @@ public class Connection {
 	}
 
 	public void sendNickHello(String nick1) throws IOException {
-		out.write(("ChatApp 2015 " + nick+ "\n").getBytes());
-		out.flush();
+		ds.write(("ChatApp 2015 " + nick+ "\n").getBytes());
+		ds.flush();
 	}
 
 	public void sendNickBusy(String nick1) throws IOException {
-		out.write(("ChatApp 2015 " + nick + " busy" + "\n").getBytes());
-		out.flush();
+		ds.write(("ChatApp 2015 " + nick + " busy" + "\n").getBytes());
+		ds.flush();
 	}
 
-	public void sendMessage(String text) {
-		out.write("MESSAGE\n".getBytes());
-		out.write(text.getBytes());
-		out.flush();
+	public void sendMessage(String text) throws IOException {
+		ds.write("MESSAGE\n".getBytes());
+		ds.write(text.getBytes());
+		ds.flush();
 	}
 
 	public Command receive() throws IOException {
