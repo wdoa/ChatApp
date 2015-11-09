@@ -36,6 +36,19 @@ public class Connection {
 			System.out.println(ex);
 		}
 	}
+	
+	public Connection(Socket s, String Nick) {
+		try {
+			socket = s;
+			os = socket.getOutputStream();
+			ds = new DataOutputStream(os);
+			in = new DataInputStream(socket.getInputStream());
+			nick = Nick;
+			System.out.println(IP + " is connected. Type message.");
+		} catch (IOException ex) {
+			System.out.println(ex);
+		}
+	}
 
 	public void accept() throws IOException {
 		out.write("ACCEPT\n".getBytes());
