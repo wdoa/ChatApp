@@ -78,6 +78,7 @@ public class Connection {
 
 	public Command receive() throws IOException {
 		String command = "";
+		Command comand;
 		int n;
 		while (true) {
 			if((n = in.read()) == '\n') {
@@ -85,7 +86,22 @@ public class Connection {
 			} else
 				command += (char) n;
 		}
-		Command comand = new Command(command);
+		comand = new Command(command.toUpperCase());
+		if (command.startsWith("ChatApp")) {
+			//command for nickname
+			comand = new Command("Nick");
+		}
+		
+		if(command.toUpperCase().equals("MESSAGE")) {
+            String message = "";
+            while (true) {
+                if((n = in.read()) == '\n')
+                    break;
+                else
+                	message += (char) n;
+            }
+            //command for message
+		}
 		return comand;
 	}
 
