@@ -4,39 +4,54 @@ import java.net.SocketAddress;
 import java.io.*;
 
 public class CallListener {
-	public String userName;
+	public String localNick, remoteNick;
 	public Boolean statusBusy;
 	private final int localPort = 28411;
 	private final String IP = "127.0.0.1";
 	public SocketAddress remoteAddress;
 	public SocketAddress localAddress;
-    
+	public ServerSocket serverSocket;
+
 	public CallListener(String userName) {
-		this.userName = userName;
+		localNick = userName;
 		this.remoteAddress = new InetSocketAddress(IP, localPort);
 	}
-    
-	public CallListener() {
-		userName ="name";
-	    remoteAddress = new InetSocketAddress(IP, localPort);
+
+	public CallListener(String userName, String remoteAdress) {
+		localNick = userName;
+		remoteAddress = new InetSocketAddress(IP, localPort);
 	}
+
+	public CallListener() {
+		localNick = " ";
+		remoteAddress = new InetSocketAddress(IP, localPort);
+	}
+
 	Connection getConnection() throws IOException {
 		if (isStatusBusy()) {
 			return null;
 		} else {
 			ServerSocket ss = new ServerSocket(localPort);
-		    Connection connect = new Connection(ss.accept(), userName);
+			Connection connect = new Connection(ss.accept(), localNick);
 			return connect;
 		}
 
 	}
-	
-	public String getUserName() {
-		return userName;
+
+	public SocketAddress getListenAddress() throws IOException {
+		return serverSocket.getLocalSocketAddress();
 	}
 
-	public void setUserName(String userName) {
-		this.userName = userName;
+	public String getLocalNick() {
+		return localNick;
+	}
+
+	public void setLocalNick(String localNick) {
+		this.localNick = localNick;
+	}
+
+	public void setListenAddress(SocketAddress listenAddress) {
+		// TODO
 	}
 
 	public SocketAddress getLocalAddress() {
@@ -59,6 +74,20 @@ public class CallListener {
 		return remoteAddress;
 	}
 
+	public String getRemoteNick() {
+		return remoteNick;
+	}
+
+	public void setRemoteNick(String remoteNick) {
+		this.remoteNick = remoteNick;
+	}
+
+	@Override
+	/* /я не пойму что именно тут должно переобразоваться / */
+	public String toString() {
+		return "CallListener [localNick=" + localNick + ", IP=" + IP + "]";
+	}
+
 	public void setRemoteAddress(SocketAddress remoteAddress) {
 		this.remoteAddress = remoteAddress;
 	}
@@ -67,8 +96,4 @@ public class CallListener {
 		return localPort;
 	}
 
-
-	
-
 }
-
