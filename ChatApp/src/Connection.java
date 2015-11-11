@@ -49,6 +49,10 @@ public class Connection {
 			System.out.println(ex);
 		}
 	}
+	
+	public boolean isOpen(){
+		return !socket.isClosed();
+		}
 
 	public void accept() throws IOException {
 		ds.write("ACCEPT\n".getBytes());

@@ -19,12 +19,19 @@ public class Caller {
 	}
 	
 	public Connection call() throws IOException {
+	if(socket==null){
+		socket = new Socket(address,port);
+		}
 	Connection c = new Connection(socket, localNick);
-	c.sendNickHello(localNick);
-	Command command = c.receive();
+	//	c.sendNickHello(localNick);
+	//	Command command = c.receive();
 	//todo
-	return null;
+	return c;
 	}
+	
+	static enum CallStatus {
+        BUSY, NO_SERVICE, NOT_ACCESSIBLE, OK, REJECTED
+    }
 	
 	
 	public String getLocalNick() {
