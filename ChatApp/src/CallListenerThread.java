@@ -50,7 +50,7 @@ public class CallListenerThread extends Observable implements Runnable {
 	}
     
     public void setListenAddress(SocketAddress listenAddress){
-    	//TODO
+    	listener.setListenAddress(listenAddress);
     }
 	
 	public void run() {
