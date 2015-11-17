@@ -60,7 +60,7 @@ public class CallListenerThread extends Observable implements Runnable {
 			} catch (IOException ex) {
 				ex.printStackTrace();
 			}
-			hasChanged();
+			setChanged();
 			notifyObservers();
 		}
 
