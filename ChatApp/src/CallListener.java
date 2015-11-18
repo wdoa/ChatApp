@@ -1,11 +1,12 @@
 import java.net.InetSocketAddress;
 import java.net.ServerSocket;
+import java.net.Socket;
 import java.net.SocketAddress;
 import java.io.*;
 
 public class CallListener {
 	public String localNick, remoteNick;
-	public Boolean statusBusy;
+	public Boolean statusBusy=false;
 	private final int localPort = 28411;
 	private final String IP = "127.0.0.1";
 	public SocketAddress remoteAddress;
@@ -83,7 +84,7 @@ public class CallListener {
 	}
 
 	@Override
-	/* /я не пойму что именно тут должно переобразоваться / */
+	/* /пїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ / */
 	public String toString() {
 		return "CallListener [localNick=" + localNick + ", IP=" + IP + "]";
 	}
@@ -94,6 +95,10 @@ public class CallListener {
 
 	public int getLocalPort() {
 		return localPort;
+	}
+
+	public Socket getSokcet() throws Exception{
+		return serverSocket.accept();
 	}
 
 }

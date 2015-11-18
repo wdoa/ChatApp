@@ -14,7 +14,7 @@ public class Caller {
 	public Caller(String address, int port) throws IOException {
 		this.port=port;
 		localNick = "nick";
-		this.address.getByName(address);
+		this.address=this.address.getByName(address);
 		socket = new Socket(this.address,port);
 	}
 	
@@ -52,6 +52,9 @@ public class Caller {
 
 	public int getPort() {
 		return port;
+	}
+	public Socket getSocket(){
+		return socket;
 	}
 
 	public void setPort(int port) {

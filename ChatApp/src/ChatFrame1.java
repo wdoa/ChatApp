@@ -3,9 +3,11 @@ import sun.net.util.IPAddressUtil;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.IOException;
+import java.awt.event.ContainerEvent;
+import java.io.*;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.util.Date;
 import java.util.Scanner;
 
 
@@ -20,7 +22,8 @@ public class ChatFrame1 extends JFrame {
     private JTextArea textArea1;
     private JButton showFriendListButton;
     private JPanel panel;
-    Caller caller;
+    private Caller caller;
+    private Connection connection;
 
 
     public ChatFrame1(){
@@ -31,14 +34,43 @@ public class ChatFrame1 extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    caller = new Caller("127.0.0.1", 28411);
+                    caller = new Caller(localIPTextField.getText(), 28411);
+                    OutputStream sout = caller.getSocket().getOutputStream();
                 }catch (Exception g){
                     g.printStackTrace();
                     Error error =new Error(g.getLocalizedMessage());
                 }
             }
         });
+        sendButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e){
+                try {
+                    connection.sendMessage(textField4.getText());
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
+
+            }
+        });
+
         setVisible(true);
+        CallListener callListener = new CallListener();
+        try {
+            this.connection = callListener.getConnection();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        while(true){
+            try {
+                textArea1.setText(textArea1.getText()+"/n"+connection.getMessage());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+    public void setText(String text){
+        textArea1.setText(textArea1.getText()+"/n"+text);
     }
 
 }

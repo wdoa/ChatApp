@@ -113,5 +113,8 @@ public class Connection {
 		}
 		return comand;
 	}
+	public String getMessage() throws IOException {
+		return in.readUTF();
+	}
 
 }
