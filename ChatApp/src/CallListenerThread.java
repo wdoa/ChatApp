@@ -6,7 +6,8 @@ public class CallListenerThread extends Observable implements Runnable {
 	private CallListener listener;
 	private boolean isAvailable;
 	private Thread thread;
-
+	private Caller.CallStatus callStatus;
+	
 	public CallListenerThread() {
 		listener = new CallListener();
 		thread =  new Thread(this);
@@ -60,7 +61,14 @@ public class CallListenerThread extends Observable implements Runnable {
 	public void run() {
 		while (!isAvailable) {
 			try {
-				listener.getConnection();
+				Connection connection=listener.getConnection();
+				if (connection == null) 
+
+					callStatus = Caller.CallStatus.valueOf("BUSY"); 
+
+					else 
+
+					callStatus = Caller.CallStatus.valueOf("OK"); 
 			} catch (IOException ex) {
 				ex.printStackTrace();
 			}
