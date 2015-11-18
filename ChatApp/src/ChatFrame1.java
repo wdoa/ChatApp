@@ -22,6 +22,7 @@ public class ChatFrame1 extends JFrame {
     private JTextArea textArea1;
     private JButton showFriendListButton;
     private JPanel panel;
+    private JLabel l1;
     private Caller caller;
     private Connection connection;
 
@@ -55,22 +56,17 @@ public class ChatFrame1 extends JFrame {
         });
 
         setVisible(true);
-        CallListener callListener = new CallListener();
-        try {
-            this.connection = callListener.getConnection();
-        }catch (Exception e){
-            e.printStackTrace();
+        Thread cl = new Thread(new CallListenerThread());
+
+        if(connection!=null){
+            textArea1.setText("Welcome to ChatApp 2015! \n Write your massege");
+            l1.setText("Coneced");
         }
-        while(true){
-            try {
-                textArea1.setText(textArea1.getText()+"/n"+connection.getMessage());
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
+
+
     }
     public void setText(String text){
-        textArea1.setText(textArea1.getText()+"/n"+text);
+        textArea1.setText(textArea1.getText()+"\n"+text);
     }
 
 }

@@ -4,7 +4,7 @@ import java.util.Observable;
 
 public class CallListenerThread extends Observable implements Runnable {
 	private CallListener listener;
-	private boolean isAvailable;
+	private volatile boolean isAvailable;
 	private Thread thread;
 	private Caller.CallStatus callStatus;
 	
@@ -59,32 +59,28 @@ public class CallListenerThread extends Observable implements Runnable {
     }
 	
 	public void run() {
+		Connection connection= null;
+		try {
+			connection = listener.getConnection();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		while (!isAvailable) {
-			try {
-				Connection connection=listener.getConnection();
 				if (connection == null) 
 
 					callStatus = Caller.CallStatus.valueOf("BUSY"); 
 
 					else 
 
-					callStatus = Caller.CallStatus.valueOf("OK"); 
-			} catch (IOException ex) {
-				ex.printStackTrace();
-			}
+					callStatus = Caller.CallStatus.valueOf("OK");
 			setChanged();
 			notifyObservers();
 		}
 
 	}
 
-	public void start() {
-		this.isAvailable = true;
-		run();
-	}
-
 	public void stop() {
-		this.isAvailable = false;
+		this.isAvailable = true;
 	}
 
 }
