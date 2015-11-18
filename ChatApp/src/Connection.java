@@ -9,6 +9,7 @@ import java.net.Socket;
 public class Connection {
 	private final int port = 28411;
 	private OutputStream os;
+	private String date="2015 ";
 	public Socket socket;
 	//private Message m = null;
 	private String nick;
@@ -65,12 +66,12 @@ public class Connection {
 	}
 
 	public void sendNickHello(String nick1) throws IOException {
-		ds.write(("ChatApp 2015 " + nick+ "\n").getBytes());
+		ds.write(("ChatApp "+date + nick+ "\n").getBytes());
 		ds.flush();
 	}
 
 	public void sendNickBusy(String nick1) throws IOException {
-		ds.write(("ChatApp 2015 " + nick + " busy" + "\n").getBytes());
+		ds.write(("ChatApp "+date + nick + " busy" + "\n").getBytes());
 		ds.flush();
 	}
 
