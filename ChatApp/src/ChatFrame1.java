@@ -31,16 +31,11 @@ public class ChatFrame1 extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    InetAddress ipAddress = InetAddress.getByName("127.0.0.1");
-                    textArea1.setText(localIPTextField.getText());
-                    caller= new Caller(ipAddress,28411);
-                } catch (UnknownHostException e1) {
-                    e1.printStackTrace();
-                } catch (IOException e1) {
-                    e1.printStackTrace();
-                    Error error = new Error("Incorect Addres");
+                    caller = new Caller("127.0.0.1", 28411);
+                }catch (Exception g){
+                    g.printStackTrace();
+                    Error error =new Error(g.getLocalizedMessage());
                 }
-
             }
         });
         setVisible(true);

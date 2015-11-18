@@ -11,11 +11,11 @@ public class Caller {
 	private Socket socket;
 	
 	
-	public Caller(InetAddress address, int port) throws IOException {
-		this.address=address;
+	public Caller(String address, int port) throws IOException {
 		this.port=port;
 		localNick = "nick";
-		socket = new Socket(address,port);
+		this.address.getByName(address);
+		socket = new Socket(this.address,port);
 	}
 	
 	public Connection call() throws IOException {

@@ -1,6 +1,6 @@
 
 
-class MessageCommand extends Command{
+public class MessageCommand extends Command{
     private String text;
     public MessageCommand(String com, String text){
         this.text=text;

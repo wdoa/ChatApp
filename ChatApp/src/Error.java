@@ -18,7 +18,7 @@ public class Error extends JFrame{
         OKButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                getDefaultCloseOperation();
+                setVisible(false);
             }
         });
         setVisible(true);
