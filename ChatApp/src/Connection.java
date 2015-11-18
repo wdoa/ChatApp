@@ -93,8 +93,12 @@ public class Connection {
 		}
 		comand = new Command(command.toUpperCase());
 		if (command.startsWith("ChatApp")) {
+			if (command.endsWith("busy")){
+			//command for nickname busy	
+			}
+			else{
 			//command for nickname
-			comand = new Command("Nick");
+			comand = new Command("Nick");}
 		}
 		
 		if(command.toUpperCase().equals("MESSAGE")) {

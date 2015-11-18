@@ -63,7 +63,7 @@ public class CallListener {
 	}
 
 	public Boolean isStatusBusy() {
-		return statusBusy;
+		return serverSocket.isBound();//statusBusy;
 	}
 
 	public void setStatus(Boolean statusBusy) {
