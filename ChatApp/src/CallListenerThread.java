@@ -5,20 +5,24 @@ import java.util.Observable;
 public class CallListenerThread extends Observable implements Runnable {
 	private CallListener listener;
 	private boolean isAvailable;
+	private Thread thread;
 
 	public CallListenerThread() {
 		listener = new CallListener();
-		start();
+		thread =  new Thread(this);
+		thread.start();
 	}
 
 	public CallListenerThread(String localNick) {
 		listener = new CallListener(localNick);
-		start();
+		thread =  new Thread(this);
+		thread.start();
 	}
 
 	public CallListenerThread(String localNick, String localIP) {
 		listener = new CallListener(localNick, localIP);
-		start();
+		thread =  new Thread(this);
+		thread.start();
 	}
 
 	public String getLocalNick() {
@@ -54,7 +58,7 @@ public class CallListenerThread extends Observable implements Runnable {
     }
 	
 	public void run() {
-		while (true) {
+		while (!isAvailable) {
 			try {
 				listener.getConnection();
 			} catch (IOException ex) {
