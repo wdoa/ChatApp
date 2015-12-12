@@ -21,6 +21,7 @@ public class LIst extends JFrame {
     private JPanel panel;
     private JScrollPane scroll;
     private JButton connectButton;
+    private JButton deleteButton;
     private FriendList fl;
     private ArrayList<String> a = new ArrayList<String>();
  //   DefaultListModel listModel;
@@ -31,6 +32,7 @@ public class LIst extends JFrame {
         setVisible(true);
         pack();
         addButton.setEnabled(false);
+        deleteButton.setEnabled(false);
         IPTextField.setEnabled(false);
         nickTextField.setEnabled(false);
         String [] strings = serverConnection.getAllNicks();
@@ -70,12 +72,6 @@ public class LIst extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 int y=list1.getSelectedIndex();
                 String s= a.get(y);
-                StringBuffer sb = new StringBuffer(s);
-                int i=sb.length()-1;
-                while(sb.charAt(i)==' '){
-                        sb.setLength(sb.length()-1);
-                    i--;
-                }
             }
         });
 
@@ -94,6 +90,21 @@ public class LIst extends JFrame {
                         a.add(IPTextField.getText());
                     }
                 });
+
+        deleteButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String n = nickTextField.getText();
+                fl.delete(n);
+                try {
+                    fl.rewriteFile(fl.getContacts());
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
+                listModel.remove(a.indexOf(IPTextField.getText()));
+                a.remove(IPTextField.getText());
+            }
+        });
 
     }
 

@@ -19,18 +19,8 @@ public class FriendList {
     public void addToFile(String IP, String nick)
             throws IOException {
         file.seek(file.length());
-        StringBuffer n = new StringBuffer("               ");
-        if (nick.length() > 15) {
-            nick = nick.substring(0, 15);
-        }
-        n.replace(0, nick.length(), nick);
-        file.writeUTF(n.toString());
-        n = new StringBuffer("                    ");
-        if (IP.length() > 20) {
-            IP = IP.substring(0, 20);
-        }
-        n.replace(0, IP.length(), IP);
-        file.writeUTF(n.toString());
+        file.writeUTF(nick);
+        file.writeUTF(IP);
     }
 //////////
 
@@ -73,37 +63,18 @@ public class FriendList {
 
 
     public void add(String nick,String IP){
-        StringBuffer n = new StringBuffer("               ");
-        if (nick.length() > 15) {
-            nick = nick.substring(0, 15);
-        }
-        n.replace(0, nick.length(), nick);
+        contacts.put(nick, IP);
+    }
 
-        StringBuffer i = new StringBuffer("                    ");
-        if (IP.length() > 20) {
-            IP = IP.substring(0, 20);
-        }
-        i.replace(0, IP.length(), IP);
-        contacts.put(n.toString(), i.toString());
+    public void delete(String nick){
+        if(contacts.containsKey(nick))
+        contacts.remove(nick);
     }
 
     public String getIP(String nick){
         String ip ;
-        StringBuffer n = new StringBuffer("               ");
-        if (nick.length() > 15) {
-            nick = nick.substring(0, 15);
-        }
-        n.replace(0, nick.length(), nick);
-        if (contacts.containsKey(n.toString())){
-            ip = contacts.get(n.toString());
-            StringBuffer sb = new StringBuffer(ip);
-            int i=sb.length()-1;
-            while(sb.charAt(i)==' '){
-                sb.setLength(sb.length()-1);
-                i--;
-            }
-            ip=sb.toString();
-        }
+        if (contacts.containsKey(nick)){
+            ip = contacts.get(nick);}
         else{
             ip = "127.0.0.1";
         }
